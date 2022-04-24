@@ -94,7 +94,7 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 				try {
 					long res = r.calc();
 					if (res == calc) {
-						assertEquals(rech, res);
+						assertEquals(rech, r);
 					}
 				} catch (ArithmeticException e) {}
 			}
@@ -110,7 +110,7 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 				try {
 					long res = r.calc();
 					if (res == calc) {
-						assertEquals(rech, res);
+						assertEquals(rech, r);
 					}
 				} catch (ArithmeticException e) {}
 			}
@@ -120,7 +120,7 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 	private long cnt(int len) {
 		long cnt = 1L;
 		for (int i = 0; i < len; i ++ ) {
-			cnt += 4L;
+			cnt *= 4L;
 		}
 		return cnt;
 	}
