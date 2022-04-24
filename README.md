@@ -1,2 +1,2 @@
-# MethodenSprache
-a method oriented programming language
+# Math Puzzles
+math puzzles from the BWINF
