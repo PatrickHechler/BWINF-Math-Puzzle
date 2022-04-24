@@ -69,7 +69,7 @@ public class MultiThreadingGleichungsGenerator implements GleichungsGenerator {
 								try {
 									long res = rech.calc();
 									Long calc = (Long) res;
-									Gleichung g = new Gleichung(rech, res);
+									Gleichung g = res < 0 ? INVALID : new Gleichung(rech, res);
 									synchronized (MultiThreadingGleichungsGenerator.this) {
 										gls.merge(calc, g, (a, b) -> INVALID);
 									}

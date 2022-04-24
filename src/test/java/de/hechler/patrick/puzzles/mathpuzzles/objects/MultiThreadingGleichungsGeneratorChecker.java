@@ -41,6 +41,18 @@ public class MultiThreadingGleichungsGeneratorChecker extends CheckedGleichungsG
 	}
 	
 	@Check(disabled = DISABLE_SLOW)
+	private Gleichung check10Num() {
+		cnt = 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L;
+		return gg.generiere(10);
+	}
+	
+	@Check(disabled = DISABLE_SLOW)
+	private Gleichung check11Num() {
+		cnt = 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L;
+		return gg.generiere(11);
+	}
+	
+	@Check(disabled = DISABLE_SLOW)
 	private Gleichung check12Num() {
 		cnt = 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L;
 		return gg.generiere(12);

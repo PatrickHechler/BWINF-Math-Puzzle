@@ -3,6 +3,7 @@ package de.hechler.patrick.puzzles.mathpuzzles.objects;
 import static de.hechler.patrick.zeugs.check.Assert.assertEqual;
 import static de.hechler.patrick.zeugs.check.Assert.assertEquals;
 import static de.hechler.patrick.zeugs.check.Assert.assertNotNull;
+import static de.hechler.patrick.zeugs.check.Assert.fail;
 
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -100,18 +101,6 @@ public class CheckedGleichungsGeneratorChecker {
 		return gg.generiere(9);
 	}
 	
-	@Check
-	private Gleichung check10Num() {
-		cnt = 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L;
-		return gg.generiere(10);
-	}
-	
-	@Check
-	private Gleichung check11Num() {
-		cnt = 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L * 4L;
-		return gg.generiere(11);
-	}
-	
 	protected long count(Gleichung gl) {
 		long cnt = 0L;
 		for (Iterator <Rechnung> iter = gl.rechnung.iterator(); iter.hasNext();) {
@@ -120,7 +109,10 @@ public class CheckedGleichungsGeneratorChecker {
 			try {
 				long calc = rech.calc();
 				if (gl.ergebnis == calc) {
-					assertEquals(gl.rechnung, rech);
+					if ( !gl.rechnung.equals(rech)) {
+						assertEquals(gl.ergebnis, gl.rechnung.calc());
+						fail("'" + gl.rechnung + "' => " + gl.ergebnis + " not equals '" + rech + "' => " + calc);
+					}
 				}
 			} catch (ArithmeticException e) {}
 			// System.out.println("cnt=" + cnt + " next='" + n + '\'');
