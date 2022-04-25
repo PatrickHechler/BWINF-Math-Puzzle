@@ -22,6 +22,36 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 	}
 	
 	@Check
+	private String check20Num() {
+		cnt = cnt(20);
+		return gg.generiere(20).toString();
+	}
+	
+	@Check
+	private String check19Num() {
+		cnt = cnt(19);
+		return gg.generiere(19).toString();
+	}
+	
+	@Check
+	private String check18Num() {
+		cnt = cnt(18);
+		return gg.generiere(18).toString();
+	}
+	
+	@Check
+	private String check17Num() {
+		cnt = cnt(17);
+		return gg.generiere(17).toString();
+	}
+	
+	@Check
+	private Gleichung check16Num() {
+		cnt = cnt(16);
+		return gg.generiere(16);
+	}
+	
+	@Check
 	private Gleichung check15Num() {
 		cnt = cnt(15);
 		return gg.generiere(15);
@@ -77,24 +107,24 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 	
 	@Check
 	private void simpleCheck() {// 6 * 2 + 2 = 14
-		Rechnung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(0, 0, 2);
+		Gleichung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(0, 0, 2);
 		assertNull(gen.length);
 	}
 	
 	@Check
 	private void simpleCheck2() {// 3 * 7 * 6 - 7 - 8 * 8 + 9 is invalid
-		Rechnung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(3, 7, 6, 7, 8, 8, 9);
+		Gleichung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(3, 7, 6, 7, 8, 8, 9);
 		RechnungswegRechnung invalid = new RechnungswegRechnung(new int[] {3, 7, 6, 7, 8, 8, 9 }, new Operator[] {Operator.mal, Operator.mal, Operator.minus, Operator.minus, Operator.mal, Operator.plus }, 64L);
-		for (Rechnung rech : gen) {
-			assertNotEquals(invalid, rech);
+		for (Gleichung gl : gen) {
+			assertNotEquals(invalid, gl.rechnung);
 		}
-		for (Rechnung rech : gen) {
-			long calc = rech.calc();
-			for (Rechnung r : rech) {
+		for (Gleichung gl : gen) {
+			long calc = gl.rechnung.calc();
+			for (Rechnung r : gl.rechnung) {
 				try {
 					long res = r.calc();
 					if (res == calc) {
-						assertEquals(rech, r);
+						assertEquals(gl.rechnung, r);
 					}
 				} catch (ArithmeticException e) {}
 			}
@@ -103,14 +133,14 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 	
 	@Check
 	private void simpleCheck3() {// 3,0,3
-		Rechnung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(3, 0, 3);
-		for (Rechnung rech : gen) {
-			long calc = rech.calc();
-			for (Rechnung r : rech) {
+		Gleichung[] gen = ((MultiWayGleichungsGenerator) gg).generiereAlle(3, 0, 3);
+		for (Gleichung rech : gen) {
+			long calc = rech.rechnung.calc();
+			for (Rechnung r : rech.rechnung) {
 				try {
 					long res = r.calc();
 					if (res == calc) {
-						assertEquals(rech, r);
+						assertEquals(rech.rechnung, r);
 					}
 				} catch (ArithmeticException e) {}
 			}

@@ -25,24 +25,24 @@ public class MultiWayGleichungsGenerator implements GleichungsGenerator {
 	
 	@Override
 	public Gleichung generiere(int zahlen) {
-		Rechnung[] rechs = generiereMehrere(zahlen);
-		return new Gleichung(rechs[0], rechs[0].calc());
+		Gleichung[] gls = generiereMehrere(zahlen);
+		return gls[0];
 	}
 	
-	public Rechnung[] generiereMehrere(int zahlen) {
+	public Gleichung[] generiereMehrere(int zahlen) {
 		while (true) {
 			int[] nums = new int[zahlen];
 			for (int i = 0; i < nums.length; i ++ ) {
 				nums[i] = rnd.nextInt(10);
 			}
-			Rechnung[] result = generiereAlle(nums);
+			Gleichung[] result = generiereAlle(nums);
 			if (result.length > 0) {
 				return result;
 			}
 		}
 	}
 	
-	public Rechnung[] generiereAlle(int... nums) {
+	public Gleichung[] generiereAlle(int... nums) {
 		Map <Rechnungsweg, Boolean> wege = new HashMap <>();
 		wege.put(new Rechnungsweg(nums[0], 0L, new Operator[nums.length - 1]), Boolean.TRUE);
 		for (int i = 1; i < nums.length; i ++ ) {
@@ -101,13 +101,15 @@ public class MultiWayGleichungsGenerator implements GleichungsGenerator {
 			Rechnungsweg add = new Rechnungsweg(0L, res, weg.ops);
 			merge(neueWege, bool, add);
 		});
-		List <Rechnung> resList = new ArrayList <>();
+		List <Gleichung> resList = new ArrayList <>();
 		neueWege.forEach((weg, bool) -> {
 			if (bool) {
-				resList.add(new RechnungswegRechnung(nums, weg.ops, weg.strichWert));
+				RechnungswegRechnung rech = new RechnungswegRechnung(nums, weg.ops, weg.strichWert);
+				Gleichung gl = new Gleichung(rech, weg.strichWert);
+				resList.add(gl);
 			}
 		});
-		Rechnung[] result = resList.toArray(new Rechnung[resList.size()]);
+		Gleichung[] result = resList.toArray(new Gleichung[resList.size()]);
 //		System.out.println("[MultiWayLog]: finish result: " + Arrays.toString(result));
 		return result;
 	}

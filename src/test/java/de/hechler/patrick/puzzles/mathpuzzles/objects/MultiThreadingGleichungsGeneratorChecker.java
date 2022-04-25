@@ -9,8 +9,8 @@ import de.hechler.patrick.zeugs.check.anotations.CheckClass;
 @CheckClass(singleThread = true)
 public class MultiThreadingGleichungsGeneratorChecker extends CheckedGleichungsGeneratorChecker {
 	
-	private static final boolean DISABLE_SLOW      = true;
-	private static final boolean DISABLE_VERY_SLOW = true;
+	private static final boolean DISABLE_SLOW      = false;
+	private static final boolean DISABLE_VERY_SLOW = false;
 	
 	protected void start() {
 		gg = new MultiThreadingGleichungsGenerator(new SimpleGleichungsGenerator(10L));
