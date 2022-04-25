@@ -38,10 +38,10 @@ public class CheckedGleichungsGeneratorChecker {
 	private void end(@ResultParam Result res) {
 		if (res.goodResult()) {
 			Object obj = res.getResult();
-			if (obj instanceof Gleichung) {
+			if (obj != null && obj instanceof Gleichung) {
 				Gleichung gl = (Gleichung) obj;
 				assertNotNull(gl);
-				assertEqual(count(gl), cnt);
+				assertEqual(cnt, count(gl));
 			}
 		}
 		gg = null;
