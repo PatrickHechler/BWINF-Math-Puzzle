@@ -55,7 +55,7 @@ public class MultiWayGleichungsGenerator implements GleichungsGenerator {
 				try {
 					pw = nums[finali];
 					sw = Math.addExact(weg.punktWert, weg.strichWert);
-					ops = weg.ops.clone();
+					ops = weg.ops;
 					ops[finali - 1] = Operator.plus;
 					rw = new Rechnungsweg(pw, sw, ops);
 					merge(neueWege, bool, rw);
@@ -80,7 +80,7 @@ public class MultiWayGleichungsGenerator implements GleichungsGenerator {
 					pw = weg.punktWert / nums[finali];
 					sw = weg.strichWert;
 					if (weg.punktWert == Math.multiplyExact(pw, nums[finali])) {
-						ops = weg.ops;
+						ops = weg.ops.clone();
 						ops[finali - 1] = Operator.geteilt;
 						rw = new Rechnungsweg(pw, sw, ops);
 						merge(neueWege, bool, rw);

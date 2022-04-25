@@ -21,27 +21,69 @@ public class MultiWayGleichungsGeneratorChecker extends CheckedGleichungsGenerat
 		gg = new MultiWayGleichungsGenerator(new Random(10L));
 	}
 	
+	public static void main(String[] args) {
+		MultiWayGleichungsGeneratorChecker mwggc = new MultiWayGleichungsGeneratorChecker();
+		mwggc.start();
+		mwggc.checkNums();
+		System.out.println("free-mem: " + Runtime.getRuntime().freeMemory());
+		System.out.println("max-mem: " + Runtime.getRuntime().maxMemory());
+		System.out.println("total-mem: " + Runtime.getRuntime().totalMemory());
+	}
+	
+	@Check
+	private void checkNums() {
+		boolean err = false;
+		int i = 1;
+		while (true) {
+			try {
+				long start = System.currentTimeMillis();
+				gg.generiere(i);
+				long end = System.currentTimeMillis();
+				long time = end - start;
+				System.out.println("gg: " + i + " time=" + time);
+				System.out.println("free-mem: " + Runtime.getRuntime().freeMemory());
+				System.out.println("max-mem: " + Runtime.getRuntime().maxMemory());
+				System.out.println("total-mem: " + Runtime.getRuntime().totalMemory());
+			} catch (Throwable t) {
+				t.printStackTrace(System.out);
+				System.out.println("free-mem: " + Runtime.getRuntime().freeMemory());
+				System.out.println("max-mem: " + Runtime.getRuntime().maxMemory());
+				System.out.println("total-mem: " + Runtime.getRuntime().totalMemory());
+				if (err) return;
+				err = true;
+				Runtime.getRuntime().runFinalization();
+				Runtime.getRuntime().gc();
+				try {
+					Thread.sleep(1000L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				Runtime.getRuntime().runFinalization();
+				Runtime.getRuntime().gc();
+				continue;
+			}
+			i ++ ;
+			err = false;
+		}
+	}
+	
 	@Check
 	private String check20Num() {
-		cnt = cnt(20);
 		return gg.generiere(20).toString();
 	}
 	
 	@Check
 	private String check19Num() {
-		cnt = cnt(19);
 		return gg.generiere(19).toString();
 	}
 	
 	@Check
 	private String check18Num() {
-		cnt = cnt(18);
 		return gg.generiere(18).toString();
 	}
 	
 	@Check
 	private String check17Num() {
-		cnt = cnt(17);
 		return gg.generiere(17).toString();
 	}
 	
